@@ -1,0 +1,57 @@
+{
+  "selection_metric": "final validation CE after 300 pilot steps",
+  "seed": 42,
+  "selected_lrs": {
+    "adamw": 0.003,
+    "muon_svd": 0.02,
+    "muon_ns": 0.05
+  },
+  "auxiliary_adamw_lr": 0.003,
+  "candidates": [
+    {
+      "method": "adamw",
+      "lr": 0.0003,
+      "val_loss": 2.7249616757035255
+    },
+    {
+      "method": "adamw",
+      "lr": 0.001,
+      "val_loss": 2.4639694914221764
+    },
+    {
+      "method": "adamw",
+      "lr": 0.003,
+      "val_loss": 2.38748462498188
+    },
+    {
+      "method": "muon_svd",
+      "lr": 0.005,
+      "val_loss": 2.3506289646029472
+    },
+    {
+      "method": "muon_svd",
+      "lr": 0.02,
+      "val_loss": 2.1306476667523384
+    },
+    {
+      "method": "muon_svd",
+      "lr": 0.05,
+      "val_loss": 2.1331773847341537
+    },
+    {
+      "method": "muon_ns",
+      "lr": 0.005,
+      "val_loss": 2.359894461929798
+    },
+    {
+      "method": "muon_ns",
+      "lr": 0.02,
+      "val_loss": 2.149687834084034
+    },
+    {
+      "method": "muon_ns",
+      "lr": 0.05,
+      "val_loss": 2.1287872418761253
+    }
+  ]
+}

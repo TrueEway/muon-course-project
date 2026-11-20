@@ -1,0 +1,89 @@
+{
+  "config": {
+    "suite": "language",
+    "method": "muon_svd",
+    "seed": 2,
+    "lr": 0.02,
+    "aux_lr": 0.003,
+    "horizon": 1500,
+    "pilot": false,
+    "model": {
+      "layers": 2,
+      "width": 64,
+      "heads": 4,
+      "ff_width": 256,
+      "context": 64,
+      "batch_size": 16,
+      "dropout": 0.0
+    },
+    "dataset_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+    "weight_decay": 0.01,
+    "adam_betas": [
+      0.9,
+      0.95
+    ],
+    "adam_eps": 1e-08,
+    "momentum": 0.95,
+    "ns_steps": 5,
+    "nesterov": true,
+    "shape_scale": "sqrt(max(1,rows/cols))",
+    "dtype": "float32",
+    "device": "cpu",
+    "torch_threads": 2,
+    "warmup_steps": 100,
+    "min_lr_factor": 0.1,
+    "evaluation_interval": 50,
+    "validation_batches": 32,
+    "validation_seed": 123456,
+    "gradient_clipping": null
+  },
+  "config_hash": "833c0d8e3bb62e87a696cdb31965804ee879fb260c66232417b1527e0c3698f6",
+  "parameter_groups": {
+    "muon": [
+      "blocks.0.attention.qkv.weight",
+      "blocks.0.attention.proj.weight",
+      "blocks.0.mlp.0.weight",
+      "blocks.0.mlp.2.weight",
+      "blocks.1.attention.qkv.weight",
+      "blocks.1.attention.proj.weight",
+      "blocks.1.mlp.0.weight",
+      "blocks.1.mlp.2.weight"
+    ],
+    "adamw_decay": [
+      "token_embedding.weight",
+      "position_embedding.weight",
+      "head.weight"
+    ],
+    "adamw_nodecay": [
+      "blocks.0.norm1.weight",
+      "blocks.0.norm1.bias",
+      "blocks.0.attention.qkv.bias",
+      "blocks.0.attention.proj.bias",
+      "blocks.0.norm2.weight",
+      "blocks.0.norm2.bias",
+      "blocks.0.mlp.0.bias",
+      "blocks.0.mlp.2.bias",
+      "blocks.1.norm1.weight",
+      "blocks.1.norm1.bias",
+      "blocks.1.attention.qkv.bias",
+      "blocks.1.attention.proj.bias",
+      "blocks.1.norm2.weight",
+      "blocks.1.norm2.bias",
+      "blocks.1.mlp.0.bias",
+      "blocks.1.mlp.2.bias",
+      "final_norm.weight",
+      "final_norm.bias"
+    ]
+  },
+  "parameter_count": 112512,
+  "initial_val_loss": 4.172716796398163,
+  "final_val_loss": 1.718855731189251,
+  "best_val_loss": 1.718855731189251,
+  "best_step": 1500,
+  "final_train_loss_mean50": 1.5846214532852172,
+  "test_cross_entropy": 1.8023112869655997,
+  "test_perplexity": 6.0636461069521514,
+  "train_seconds": 28.762823398341425,
+  "wall_seconds_excluding_initial_eval_and_test": 32.58271050010808,
+  "tokens_per_second": 53402.26787640645
+}

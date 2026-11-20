@@ -1,0 +1,19 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "numpy": "2.5.5",
+  "torch": "2.15.0+cpu",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "Intel64 Family 6 Model 197 Stepping 2, GenuineIntel",
+  "cpu_count": 14,
+  "torch_threads": 2,
+  "device": "cpu",
+  "source_sha256": {
+    "experiments/__init__.py": "2d872f5dab4f3b8d578c0075727ac64a6ad922b27eefdf9bd129ff92533f12ef",
+    "experiments/common.py": "c56fd03d183092caec73b048b267fcb3b6de5c46574ac6b674ba6e3bc46e2f1f",
+    "experiments/language.py": "53ad755bf7424cef51f6553a3d18e8783e37ee3fba57478e54322a794c02c1e4",
+    "experiments/optim.py": "8dac027fe2bb26409bb72ce55bd54d89c6ec32742240d02821198cd8ed6d2295",
+    "experiments/run.py": "c3f27ab17f4cb1ebfbda96739654dddcbde71ebb5f3b123a976964dddf694e04",
+    "experiments/summarize.py": "f28bcc4e9b413e6ab5b23ce49d3257112f4bfc0605de88836477288f511d0fa4",
+    "experiments/synthetic.py": "7495e9d233aa6748bdc2c01e3311542d346c46112c7c98d7f8e0d48809f69de6"
+  }
+}

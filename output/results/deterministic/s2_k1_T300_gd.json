@@ -1,0 +1,26 @@
+{
+  "config": {
+    "suite": "deterministic",
+    "seed": 2,
+    "kappa": 1,
+    "horizon": 300,
+    "method": "gd",
+    "beta": 0.0,
+    "eta": 0.9,
+    "shape": [
+      32,
+      16
+    ],
+    "initialization": "M1=G1",
+    "weight_decay": 0
+  },
+  "config_hash": "82c277baed45c7480fdf6b9548b6bc7392c8f186d494509f25541268fc468fcf",
+  "initial_loss": 0.5,
+  "final_loss": 0.0,
+  "final_grad_fro": 0.0,
+  "avg_grad_fro": 0.0037037037037037025,
+  "avg_grad_nuclear": 0.01375407020013194,
+  "theorem_bound": null,
+  "max_descent_violation": 0.0,
+  "elapsed_seconds": 0.005174200050532818
+}

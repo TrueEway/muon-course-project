@@ -1,0 +1,30 @@
+{
+  "pdf_sha256": "2b6277113924ec42118f0b6839a50cb34337db7380d4e9722b5932b6cb33606e",
+  "pages_reviewed": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "renderer": "Poppler pdftoppm, 110 dpi",
+  "result": "passed",
+  "checks": [
+    "all pages visually inspected",
+    "equations and theorem boxes legible",
+    "figures and tables readable and unclipped",
+    "references and code hyperlink present",
+    "consistent headers and page numbers",
+    "no overfull boxes or unresolved references in final LaTeX log"
+  ]
+}

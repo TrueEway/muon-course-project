@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "crosschecked_run_logs": 201,
+  "unchanged_training_source_files": 6,
+  "pdf_pages": 15,
+  "pdf_sha256": "2b6277113924ec42118f0b6839a50cb34337db7380d4e9722b5932b6cb33606e",
+  "results_sha256": "5fecfc7a11bdc5d2d960714b2faf0d666c0757d6be39cc07498ee11840a6891c",
+  "code_hyperlink_present": true,
+  "text_extractor": "Poppler pdftotext UTF-8",
+  "page_text_lengths": [
+    1224,
+    1420,
+    1393,
+    1331,
+    1255,
+    1376,
+    1544,
+    1685,
+    1434,
+    1322,
+    1409,
+    1458,
+    636,
+    2151,
+    1291
+  ]
+}

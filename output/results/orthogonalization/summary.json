@@ -1,0 +1,40 @@
+{
+  "config": {
+    "suite": "orthogonalization",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "steps": [
+      1,
+      3,
+      5,
+      10
+    ],
+    "shapes": [
+      [
+        32,
+        32
+      ],
+      [
+        64,
+        16
+      ],
+      [
+        16,
+        64
+      ]
+    ],
+    "spectra": [
+      "flat",
+      "ill_conditioned",
+      "rank_deficient"
+    ],
+    "dtype": "float64",
+    "eps": 1e-07,
+    "repeats": 30
+  },
+  "config_hash": "e8aa33179fa39cf65e5a8989ddb8fa6e37f2675cda4e0f7c2960b0b4988ac17c",
+  "records": 108
+}

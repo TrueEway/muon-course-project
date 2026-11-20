@@ -1,0 +1,28 @@
+{
+  "config": {
+    "suite": "stochastic",
+    "seed": 2,
+    "kappa": 10,
+    "sigma": 0.01,
+    "batch": 16,
+    "horizon": 1024,
+    "alpha": 0.03125,
+    "beta": 0.96875,
+    "eta": 0.0005524271728019904,
+    "shape": [
+      32,
+      16
+    ],
+    "initialization": "M1=G1",
+    "weight_decay": 0,
+    "noise": "iid Gaussian, E||noise||F^2=sigma^2/B"
+  },
+  "config_hash": "ed13416ffa6c5ddf4d81d8d4e860e4c896a5f5c6aa1465c9078559e245275ac2",
+  "final_loss": 1.0801572674016957e-05,
+  "avg_grad_fro": 0.13468635946695023,
+  "avg_grad_nuclear": 0.38712353002663524,
+  "avg_tracking_error": 0.01873180832338098,
+  "tracking_bound": 0.0690210361656884,
+  "theorem_bound": 0.9331339826404974,
+  "elapsed_seconds": 0.13705550006125122
+}
