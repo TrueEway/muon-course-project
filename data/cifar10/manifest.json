@@ -1,0 +1,21 @@
+{
+  "url": "https://cave.cs.toronto.edu/kriz/cifar-10-binary.tar.gz",
+  "official_md5": "c32a1d4ab5d03f1284b67883e8d87530",
+  "sha256": "c4a38c50a1bc5f3a1c5537f2155ab9d68f9f25eb1ed8d9ddda3db29a59bca1dd",
+  "train": 45000,
+  "validation": 5000,
+  "test": 10000,
+  "split_seed": 20261128,
+  "training_indices_sha256": "54d474a6eb0e1baa532fe81d4b3a51fc8414066caa669460732b673114069849",
+  "validation_indices_sha256": "d80e9546eda4c445482791af0c1d2a2da762cbe0524e7dfc08470c4d0a7b7467",
+  "normalization_mean": [
+    0.4914,
+    0.4822,
+    0.4465
+  ],
+  "normalization_std": [
+    0.247,
+    0.2435,
+    0.2616
+  ]
+}

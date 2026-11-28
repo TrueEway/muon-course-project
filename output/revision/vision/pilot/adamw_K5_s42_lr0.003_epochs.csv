@@ -1,0 +1,2 @@
+epoch,step,train_loss,val_loss,val_accuracy,train_compute_seconds,wall_seconds,test_loss,test_accuracy
+1,96,1.933615439881881,1.55636279296875,41.34,2.454520834609866,7.350096683949232,,

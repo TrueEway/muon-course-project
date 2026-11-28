@@ -1,0 +1,38 @@
+{
+  "hardware": {
+    "device": "cuda:0",
+    "gpu_name": "NVIDIA H20-3e",
+    "gpu_total_memory_mib": 143771.0,
+    "driver_version": "550.144.03",
+    "cuda_version": "12.9",
+    "cpu_model": "Intel(R) Xeon(R) 6759P-C",
+    "cpu_affinity_count": 4,
+    "gpu_duty_target": 0.35,
+    "gpu_allocator_fraction": 0.04,
+    "tf32": false,
+    "sharing_policy": "single GPU, sequential workers, cooperative pacing"
+  },
+  "results": [
+    {
+      "method": "sgd",
+      "active_step_ms": 7.647496337691943,
+      "peak_allocated_mib": 254.42578125,
+      "peak_reserved_mib": 284.0,
+      "finite_loss": true
+    },
+    {
+      "method": "adamw",
+      "active_step_ms": 8.872931823134422,
+      "peak_allocated_mib": 294.95849609375,
+      "peak_reserved_mib": 312.0,
+      "finite_loss": true
+    },
+    {
+      "method": "muon",
+      "active_step_ms": 26.1448056747516,
+      "peak_allocated_mib": 294.95849609375,
+      "peak_reserved_mib": 312.0,
+      "finite_loss": true
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 * text=auto eol=lf
 output/results/** -text
+output/revision/** -text
+*.npz binary
 *.pdf binary
 *.png binary
 *.zip binary

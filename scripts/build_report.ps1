@@ -15,6 +15,7 @@ try {
     $compilationExit = $LASTEXITCODE
     Get-ChildItem -LiteralPath (Join-Path $buildRoot 'output\pdf') -File | Copy-Item -Destination (Join-Path $projectRoot 'output\pdf') -Force
     if ($compilationExit -ne 0) { throw 'LaTeX compilation failed.' }
+    Copy-Item -LiteralPath (Join-Path $projectRoot 'output\pdf\main.pdf') -Destination (Join-Path $projectRoot 'output\pdf\Muon_Report.pdf') -Force
 } finally {
     Pop-Location
     $resolvedBuild = [System.IO.Path]::GetFullPath($buildRoot)

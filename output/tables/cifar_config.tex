@@ -1,0 +1,13 @@
+\begin{tabular}{lccc}\toprule
+配置项 & SGD+M & AdamW & Muon 混合 \\ \midrule
+模型 / 参数量 & \multicolumn{3}{c}{完整 ResNet-18 / 11,181,642} \\
+输入 / stem & \multicolumn{3}{c}{$32\times32$ / 原始 $7\times7$、步长 2，保留 max-pool} \\
+训练 / 验证 / 测试 & \multicolumn{3}{c}{45,000 / 5,000 / 10,000} \\
+批量 / epoch / 种子 & \multicolumn{3}{c}{128 / 3 / 0、1、2} \\
+硬件 / 精度 & \multicolumn{3}{c}{单张 H20-3e，Xeon 6759P-C；float32、4 个 CPU 线程} \\
+共享资源限制 & \multicolumn{3}{c}{GPU 分配器上限 4\%，协作占空目标 35\%，TF32 关闭} \\
+选定学习率 & 0.03 & 0.003 & 0.05 \\
+动量 / 矩参数 & $0.9$ & $(0.9,0.95)$ & $0.95$；辅助 AdamW $(0.9,0.95)$ \\
+矩阵权重衰减 & $5\times10^{-4}$ & $5\times10^{-4}$ & $5\times10^{-4}$ \\
+调度 / 调参预算 & \multicolumn{3}{c}{50 步预热、余弦衰减；各 3 个 LR、种子 42、96 步} \\
+\bottomrule\end{tabular}

@@ -66,6 +66,7 @@ def main():
     assert all(len(p.strip()) > 50 for p in pages), 'Unexpected almost-empty PDF page'
     text = '\n'.join(pages)
     assert 'Muon' in text and '参考文献' in text, 'Missing report text'
+    assert all(term in text for term in ['ResNet-18','H20-3e','1056']), 'Missing revised protocol in PDF'
     assert '??' not in text, 'Unresolved reference in PDF'
     links = []
     for page in reader.pages:
@@ -73,11 +74,18 @@ def main():
             annotation = item.get_object()
             if annotation.get('/A', {}).get('/URI'):
                 links.append(str(annotation['/A']['/URI']))
-    assert any('TrueEway/muon-course-project/tree/v1.0' in x for x in links), 'Code hyperlink missing'
-    value = dict(status='passed', crosschecked_run_logs=count, unchanged_training_source_files=checked_sources,
+    assert any('TrueEway/muon-course-project/tree/v1.1' in x for x in links), 'Code hyperlink missing'
+    assert (ROOT/'output'/'pdf'/'Muon_Report.pdf').read_bytes() == (ROOT/'output'/'pdf'/'main.pdf').read_bytes()
+    from verify_revision import verify_revision
+    revision = verify_revision()
+    revised_audit = json.loads((ROOT/'output'/'revision_audit.json').read_text(encoding='utf-8'))
+    for summary in revised_audit['primary_summary']:
+        assert f"{summary['test_accuracy_mean']:.2f}" in text, 'Revised accuracy missing from PDF'
+    value = dict(status='passed', crosschecked_run_logs=count,
+                 total_formal_runs_checked=count+revision['revision_formal_runs'], unchanged_training_source_files=checked_sources,
                  pdf_pages=len(reader.pages), pdf_sha256=hashlib.sha256((ROOT / 'output' / 'pdf' / 'main.pdf').read_bytes()).hexdigest(),
                  results_sha256=digest.hexdigest(), code_hyperlink_present=True,
-                 text_extractor='Poppler pdftotext UTF-8', page_text_lengths=[len(p) for p in pages])
+                 text_extractor='Poppler pdftotext UTF-8', page_text_lengths=[len(p) for p in pages],**revision)
     path = ROOT / 'output' / 'verification.json'
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2), encoding='utf-8')
     print(json.dumps(value, ensure_ascii=False, indent=2))

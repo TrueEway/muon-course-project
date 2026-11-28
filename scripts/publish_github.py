@@ -52,6 +52,7 @@ def request(token, path, payload=None):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--publish', action='store_true')
+    parser.add_argument('--tag', default='v1.1', help='Existing local tag to publish; older tags are never replaced')
     args = parser.parse_args()
     token = credentials()
     user = request(token, '/user')
@@ -63,6 +64,22 @@ def main():
         return
     if not (ROOT / 'output' / 'pdf' / 'main.pdf').exists() or not (ROOT / 'output' / 'audit.json').exists():
         raise RuntimeError('Finish and verify the report and experiments before publishing.')
+    if args.tag != 'v1.0':
+        import hashlib
+        verification = json.loads((ROOT/'output'/'verification.json').read_text(encoding='utf-8'))
+        if verification.get('vision_formal_runs') != 21 or verification.get('revision_formal_runs') != 30:
+            raise RuntimeError('Complete and verify all revised experiments before publishing.')
+        if verification['pdf_sha256'] != hashlib.sha256((ROOT/'output'/'pdf'/'Muon_Report.pdf').read_bytes()).hexdigest():
+            raise RuntimeError('The report changed after verification.')
+        visual_review = json.loads((ROOT/'output'/'visual_review.json').read_text(encoding='utf-8'))
+        if visual_review.get('result') != 'passed' or visual_review.get('pdf_sha256') != verification['pdf_sha256']:
+            raise RuntimeError('Render and visually review the final PDF before publishing.')
+    local_tag = subprocess.check_output(['git','rev-parse',args.tag+'^{commit}'],cwd=ROOT,text=True).strip()
+    head = subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+    if local_tag != head:
+        raise RuntimeError('The selected tag does not point at the prepared HEAD commit.')
+    if subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip():
+        raise RuntimeError('Commit the prepared deliverables before publishing.')
     if repo is None:
         repo = request(token, '/user/repos', dict(name=REPO, private=False,
             description='Muon optimizer: convergence proofs, reproducible CPU matrix experiments and a tiny Transformer study.',
@@ -76,8 +93,8 @@ def main():
     elif current.stdout.strip() != remote:
         raise RuntimeError('Existing origin differs from the intended repository.')
     subprocess.run(['git', 'push', '-u', 'origin', 'main'], cwd=ROOT, check=True)
-    subprocess.run(['git', 'push', 'origin', 'v1.0'], cwd=ROOT, check=True)
-    print(json.dumps({'published': repo['html_url'], 'visibility': 'public', 'tag': 'v1.0'}))
+    subprocess.run(['git', 'push', 'origin', args.tag], cwd=ROOT, check=True)
+    print(json.dumps({'published': repo['html_url'], 'visibility': 'public', 'tag': args.tag}))
 
 
 if __name__ == '__main__':

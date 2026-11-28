@@ -1,0 +1,21 @@
+{
+  "config": {
+    "method": "sgd",
+    "seed": 42,
+    "lr": 0.3,
+    "budget": 300,
+    "pilot": true,
+    "dimension": 32,
+    "kappa": 10000.0,
+    "weight_decay": 0,
+    "ns_steps": 5,
+    "initial_scale": 0.03
+  },
+  "config_hash": "9871e7ce41079b45d6824cc50132724aee205065581b0e8c844467537a0216e5",
+  "valid": true,
+  "initial_loss": 1.137033065755371,
+  "final_loss": 2.212222565781021e-06,
+  "relative_reconstruction": 0.0014078961752130835,
+  "elapsed_seconds": 0.04283938556909561,
+  "steps": 300
+}

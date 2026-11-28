@@ -1,0 +1,183 @@
+\section{收敛性结果与完整证明}\label{sec:theory}
+\subsection{假设、随机信息与评价指标}
+以下只分析算法\ref{alg:exact}。令 $H_t=\nabla f(W_t)$，$Z_t=G_t-H_t$，$E_t=M_t-H_t$。用 $\mathcal F_t$ 表示采样 $G_t$ 之前已知的全部信息，其中包括 $W_t$ 和过去的样本。
+
+\begin{assumption}[下界与光滑性]\label{ass:smooth}
+存在有限 $f_{\inf}$，使 $f(W)\geq f_{\inf}$。对任意 $X,Y$，有
+\begin{equation}\label{eq:smooth}
+ \Frob{\nabla f(X)-\nabla f(Y)}\leq L\Frob{X-Y},\qquad L>0.
+\end{equation}
+记 $\Delta=f(W_1)-f_{\inf}$，初值 $W_1$ 固定。
+\end{assumption}
+
+\begin{assumption}[条件无偏与方差]\label{ass:noise}
+对每个 $t$，批量梯度满足
+\begin{equation}\label{eq:noise}
+ \E[Z_t\mid\mathcal F_t]=0,\qquad
+ \E[\Frob{Z_t}^2\mid\mathcal F_t]\leq\sigma^2/B.
+\end{equation}
+\end{assumption}
+
+若每个样本的条件方差不超过 $\sigma^2$ 且同一批中的样本条件独立，则平均梯度满足式\eqref{eq:noise}。证明仅需要这一矩条件，不要求噪声服从高斯分布，也不假定不同时间的参数或真实梯度相互独立。合成实验采用高斯噪声只是为了精确控制其方差。
+
+本文评价平均梯度核范数
+\begin{equation}\label{eq:criterion}
+ A_T=\frac1T\sum_{t=1}^T\E\nuc{H_t}.
+\end{equation}
+由于 $\Frob{H_t}\leq\nuc{H_t}$，$A_T$ 的上界也控制平均 Frobenius 梯度范数。若独立均匀抽取 $R\in\{1,\ldots,T\}$，则 $\E\Frob{\nabla f(W_R)}\leq A_T$。这给出随机输出的一阶平稳性保证，不要求最后一个迭代点具有同样上界。
+
+\subsection{含跟踪误差的下降不等式}
+\begin{lemma}[单步下降]\label{lem:descent}
+在假设\ref{ass:smooth}下，算法\ref{alg:exact}的每一步都满足
+\begin{equation}\label{eq:descent}
+ f(W_{t+1})\leq f(W_t)-\eta\nuc{H_t}
+ +2\eta\sqrt r\Frob{E_t}+\frac{Lr\eta^2}{2}.
+\end{equation}
+因此
+\begin{equation}\label{eq:master}
+ A_T\leq\frac{\Delta}{\eta T}
+ +\frac{2\sqrt r}{T}\sum_{t=1}^T\E\Frob{E_t}
+ +\frac{Lr\eta}{2}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+由谱范数与核范数的 H\"older 不等式，以及引理\ref{lem:duality}，
+\begin{align}
+ \inner{H_t}{O_t^\star}
+ &=\inner{M_t}{O_t^\star}-\inner{E_t}{O_t^\star} \notag\\
+ &\geq\nuc{M_t}-\nuc{E_t}\op{O_t^\star}\notag\\
+ &\geq\nuc{H_t}-2\nuc{E_t}\notag\\
+ &\geq\nuc{H_t}-2\sqrt r\Frob{E_t}.\label{eq:alignment}
+\end{align}
+第三行使用核范数的三角不等式；这里没有使用 $M_t$ 的逆或其最小奇异值，因此秩亏情形仍成立。光滑性推出标准下降引理
+\begin{equation}
+ f(W_{t+1})\leq f(W_t)+\inner{H_t}{W_{t+1}-W_t}
+ +\frac L2\Frob{W_{t+1}-W_t}^2.
+\end{equation}
+代入 $W_{t+1}-W_t=-\eta O_t^\star$，并使用 $\Frob{O_t^\star}^2\leq r$，得到式\eqref{eq:descent}。对 $t$ 求和、取期望，再用 $f(W_{T+1})\geq f_{\inf}$，即得式\eqref{eq:master}。
+\end{proof}
+
+式\eqref{eq:descent}中的三个变化项具有不同含义：核范数项产生下降，跟踪误差造成方向偏差，步长平方项来自目标曲率。仅有动量矩阵的范数较小并不足以保证下降；真正相关的是它与当前梯度的差。
+
+\subsection{动量跟踪误差的三项分解}
+\begin{lemma}[误差递推与平均界]\label{lem:tracking}
+在两个假设下，令 $\alpha=1-\beta\in(0,1]$，则对 $t\geq1$，
+\begin{equation}\label{eq:trackingpoint}
+ \E\Frob{E_t}\leq
+ \frac{\sigma}{\sqrt B}\beta^{t-1}
+ +\frac{\sigma}{\sqrt B}\sqrt{\frac{\alpha}{1+\beta}}
+ +\frac{\beta L\eta\sqrt r}{\alpha}.
+\end{equation}
+其中在 $t=1$ 时将 $\beta^0$ 解释为 1。进一步有
+\begin{equation}\label{eq:trackingavg}
+ \frac1T\sum_{t=1}^T\E\Frob{E_t}\leq
+ \frac{\sigma}{T\alpha\sqrt B}
+ +\sigma\sqrt{\frac{\alpha}{B}}
+ +\frac{\beta L\eta\sqrt r}{\alpha}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+初始化给出 $E_1=Z_1$。对 $t\geq2$，由动量递推可得
+\begin{equation}\label{eq:erecursion}
+ E_t=\beta E_{t-1}+\alpha Z_t+\beta(H_{t-1}-H_t).
+\end{equation}
+将递推展开为
+\begin{equation}\label{eq:edecomposition}
+ E_t=\underbrace{\beta^{t-1}Z_1}_{\text{初始化}}
+ +\underbrace{\alpha\sum_{i=2}^t\beta^{t-i}Z_i}_{\text{噪声}}
+ +\underbrace{\beta\sum_{i=2}^t\beta^{t-i}(H_{i-1}-H_i)}_{\text{梯度漂移}}.
+\end{equation}
+先由 Jensen 不等式，初始化项的期望范数不超过 $\beta^{t-1}\sigma/\sqrt B$。
+
+对于噪声项，当 $i<j$ 时，$Z_i$ 对 $\mathcal F_j$ 可测，故
+\begin{equation}
+ \E\inner{Z_i}{Z_j}
+ =\E\inner{Z_i}{\E[Z_j\mid\mathcal F_j]}=0.
+\end{equation}
+这一步利用的是鞅差正交性，而非未经说明的时间独立性。于是
+\begin{align}
+ \E\Frob{\alpha\sum_{i=2}^t\beta^{t-i}Z_i}
+ &\leq\left(\alpha^2\sum_{i=2}^t\beta^{2(t-i)}\E\Frob{Z_i}^2\right)^{1/2}\notag\\
+ &\leq\frac{\alpha\sigma}{\sqrt{B(1-\beta^2)}}
+ =\frac{\sigma}{\sqrt B}\sqrt{\frac{\alpha}{1+\beta}}.\label{eq:noisesum}
+\end{align}
+当 $t=1$ 时，该和为空，右端仍是有效上界。
+
+最后，由光滑性与 $\Frob{O_{i-1}^\star}\leq\sqrt r$，有
+\begin{equation}
+ \Frob{H_{i-1}-H_i}\leq L\Frob{W_{i-1}-W_i}
+ \leq L\eta\sqrt r.
+\end{equation}
+漂移项的范数因此不超过
+\begin{equation}\label{eq:drift}
+ \beta L\eta\sqrt r\sum_{i=2}^t\beta^{t-i}
+ \leq\frac{\beta L\eta\sqrt r}{\alpha}.
+\end{equation}
+将三项上界代入式\eqref{eq:edecomposition}，得到式\eqref{eq:trackingpoint}。再用 $\sum_{t=1}^T\beta^{t-1}\leq1/\alpha$ 和 $1+\beta\geq1$，得到式\eqref{eq:trackingavg}。
+\end{proof}
+
+减小 $\alpha$ 会增强动量平均，从而减小噪声项，但也使漂移项中的 $1/\alpha$ 增大。因此，动量参数并非越接近 1 越好；必须同时缩小参数移动的步长。这个权衡直接决定下面的随机参数调度。
+
+\subsection{有限步界与确定性收敛率}
+\begin{theorem}[显式有限步上界]\label{thm:finite}
+在假设\ref{ass:smooth}与\ref{ass:noise}下，对任意 $T\geq1$、$\eta>0$、$0\leq\beta<1$，算法\ref{alg:exact}满足
+\begin{equation}\label{eq:finite}
+ \boxed{\begin{aligned}
+ A_T\leq {}&\frac{\Delta}{\eta T}+\frac{Lr\eta}{2}\\
+ &+2\sqrt r\left(
+ \frac{\sigma}{T\alpha\sqrt B}
+ +\sigma\sqrt{\frac{\alpha}{B}}
+ +\frac{\beta L\eta\sqrt r}{\alpha}\right).
+ \end{aligned}}
+\end{equation}
+\end{theorem}
+\begin{proof}
+将引理\ref{lem:tracking}的平均误差界代入引理\ref{lem:descent}的式\eqref{eq:master}即可。由于所有被估计量均为非负且有限的范数矩，本证明中的有限求和与期望交换是合法的。
+\end{proof}
+
+\begin{corollary}[确定性情形]\label{cor:det}
+若 $G_t=H_t$，固定 $\beta<1$，令
+\begin{equation}
+ C_\beta=Lr\left(\frac12+\frac{2\beta}{1-\beta}\right),
+\end{equation}
+则 $T^{-1}\sum_t\nuc{H_t}\leq\Delta/(\eta T)+C_\beta\eta$。
+当 $\Delta>0$ 且 $\eta=\sqrt{\Delta/(C_\beta T)}$ 时，
+\begin{equation}\label{eq:detrate}
+ \frac1T\sum_{t=1}^T\Frob{H_t}
+ \leq\frac1T\sum_{t=1}^T\nuc{H_t}
+ \leq2\sqrt{\frac{\Delta C_\beta}{T}}.
+\end{equation}
+\end{corollary}
+\begin{proof}
+取 $\sigma=0$，将式\eqref{eq:finite}中所有与 $\eta$ 成正比的项合并即得 $C_\beta\eta$。对 $\Delta/(\eta T)+C_\beta\eta$ 最小化得到所给步长。若 $\Delta=0$，初值达到目标下界，光滑无约束目标的梯度为零，精确算法保持不动。
+\end{proof}
+
+特别地，$\beta=0$ 时没有跟踪误差，$C_0=Lr/2$。固定非零步长只能由此保证一个随步长缩小的平均残差上界，不能据此宣称参数序列必然收敛。步长按 $T^{-1/2}$ 缩放指的是针对不同预算分别设置常步长，并非本定理已经分析了同一次运行中的逐步衰减。
+
+\subsection{随机非凸收敛率与梯度复杂度}
+\begin{theorem}[固定批量的随机收敛率]\label{thm:stochastic}
+固定 $B\geq1$。对给定迭代预算 $T$，取
+\begin{equation}\label{eq:schedule}
+ \alpha=T^{-1/2},\qquad \beta=1-T^{-1/2},\qquad
+ \eta=cT^{-3/4},\quad c>0.
+\end{equation}
+在上述假设下，有
+\begin{equation}\label{eq:stochrate}
+ \begin{aligned}
+ A_T\leq{}&\left(\frac\Delta c+2Lrc+\frac{2\sqrt r\sigma}{\sqrt B}\right)T^{-1/4}\\
+ &+\frac{2\sqrt r\sigma}{\sqrt B}T^{-1/2}
+ +\frac{Lrc}{2}T^{-3/4}.
+ \end{aligned}
+\end{equation}
+因此，在 $L,r,\Delta,\sigma,B,c$ 固定时，$A_T=O(T^{-1/4})$。
+\end{theorem}
+\begin{proof}
+将式\eqref{eq:schedule}逐项代入式\eqref{eq:finite}。第一项变为 $(\Delta/c)T^{-1/4}$，曲率项为 $(Lrc/2)T^{-3/4}$，初始化项为 $(2\sqrt r\sigma/\sqrt B)T^{-1/2}$，噪声项为 $(2\sqrt r\sigma/\sqrt B)T^{-1/4}$。漂移项为 $2\beta LrcT^{-1/4}$，利用 $\beta\leq1$ 即得到式\eqref{eq:stochrate}。
+\end{proof}
+
+由式\eqref{eq:stochrate}，若要求均匀随机输出满足 $\E\Frob{\nabla f(W_R)}\leq\varepsilon$，足够的迭代量为 $O(\varepsilon^{-4})$，单样本梯度调用量为 $O(B\varepsilon^{-4})$。固定 $B$ 时二者具有相同的 $\varepsilon$ 阶数。这里的指标是梯度\emph{范数}的期望，而非梯度范数\emph{平方}的期望，两种复杂度表述不能直接互换。
+
+该界保留了 $r$ 的显式依赖。它并未证明 Muon 的常数小于 AdamW，也未证明其为一般随机优化问题的最优方法。若在随机情形固定 $\beta<1$ 和 $B$，式\eqref{eq:finite}中的 $\sigma\sqrt{\alpha/B}$ 项不会随 $T$ 消失，当前证明只能给出噪声残差界。应用中常用的固定动量因此不属于定理\ref{thm:stochastic}的消失误差调度。
+
+\input{sections/inexact_theorem}
+\FloatBarrier

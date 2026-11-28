@@ -1,0 +1,21 @@
+{
+  "config": {
+    "method": "adamw",
+    "seed": 42,
+    "lr": 0.001,
+    "budget": 300,
+    "pilot": true,
+    "dimension": 32,
+    "kappa": 10000.0,
+    "weight_decay": 0,
+    "ns_steps": 5,
+    "initial_scale": 0.03
+  },
+  "config_hash": "439fb20c4f9d58fd5b96f0918b1f803e7d0af6fd5560bb499d274b022c826aba",
+  "valid": true,
+  "initial_loss": 1.137033065755371,
+  "final_loss": 3.3012342124440124e-06,
+  "relative_reconstruction": 0.0017198651196844246,
+  "elapsed_seconds": 0.05101367458701134,
+  "steps": 300
+}

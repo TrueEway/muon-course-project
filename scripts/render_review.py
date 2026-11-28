@@ -3,6 +3,7 @@ from pathlib import Path
 import subprocess
 
 from PIL import Image, ImageDraw
+from pypdf import PdfReader
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -12,7 +13,9 @@ def main():
     target.mkdir(parents=True, exist_ok=True)
     subprocess.run(['pdftoppm', '-r', '110', '-png', str(ROOT / 'output' / 'pdf' / 'main.pdf'),
                     str(target / 'page')], check=True)
-    pages = sorted(target.glob('page-*.png'))
+    count = len(PdfReader(ROOT / 'output' / 'pdf' / 'main.pdf').pages)
+    digits = len(str(count))
+    pages = [target / f'page-{index:0{digits}d}.png' for index in range(1,count+1)]
     for offset in range(0, len(pages), 6):
         sheet = Image.new('RGB', (1200, 1170), 'white')
         draw = ImageDraw.Draw(sheet)

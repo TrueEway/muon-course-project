@@ -1,0 +1,59 @@
+{
+  "edition": "v1.1-h20",
+  "model": "canonical ResNet-18, original 7x7 stem, native 32x32 inputs",
+  "epochs": 3,
+  "batch": 128,
+  "threads": 4,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "pilot_seed": 42,
+  "pilot_steps": 96,
+  "threshold_val_accuracy_percent": 40.0,
+  "k_values": [
+    0,
+    1,
+    3,
+    5,
+    7
+  ],
+  "learning_rate_grids": {
+    "sgd": [
+      0.03,
+      0.1,
+      0.3
+    ],
+    "adamw": [
+      0.0003,
+      0.001,
+      0.003
+    ],
+    "muon": [
+      0.005,
+      0.02,
+      0.05
+    ]
+  },
+  "ablation_policy": "K=5 pilot selects Muon LR; K=0,1,3,7 share the same selected LR and auxiliary optimizer",
+  "test_policy": "Test curves evaluated post-training; LR selection and target hitting use validation only",
+  "k_zero": "Frobenius-normalized momentum, zero polynomial applications",
+  "augmentation": "zero-pad 4, random 32x32 crop, random horizontal flip",
+  "schedule": "linear 50-step warmup; cosine decay to 0.1 of base LR",
+  "weight_decay": 0.0005,
+  "reference_parameter": "layer1.0.conv2.weight",
+  "device": "cuda:0",
+  "dtype": "float32",
+  "resource_policy": {
+    "single_visible_gpu": true,
+    "gpu_allocator_fraction": 0.04,
+    "target_duty_cycle": 0.35,
+    "cpu_affinity_count": 4,
+    "cpu_threads": 4,
+    "interop_threads": 1,
+    "data_loader_workers": 0,
+    "minimum_free_gpu_gib": 12,
+    "tf32": false
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "pdf_sha256": "2b6277113924ec42118f0b6839a50cb34337db7380d4e9722b5932b6cb33606e",
+  "pdf_sha256": "9bff89fa87a6e1cb124860b69742f21abdaf4e746fee23e257351cb941493a00",
   "pages_reviewed": [
     1,
     2,
@@ -15,16 +15,25 @@
     12,
     13,
     14,
-    15
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21
   ],
+  "body_pages": 13,
+  "reference_pages": 1,
+  "appendix_pages": 7,
   "renderer": "Poppler pdftoppm, 110 dpi",
   "result": "passed",
   "checks": [
-    "all pages visually inspected",
-    "equations and theorem boxes legible",
-    "figures and tables readable and unclipped",
-    "references and code hyperlink present",
-    "consistent headers and page numbers",
-    "no overfull boxes or unresolved references in final LaTeX log"
+    "all 21 final pages visually inspected",
+    "theorem equations and proof continuations legible",
+    "four figures checked at full resolution; no clipped labels or obscured data",
+    "tables readable with consistent metrics and units",
+    "references and clickable v1.1 code link present",
+    "no overfull boxes, missing characters, or unresolved references in final LaTeX log"
   ]
 }

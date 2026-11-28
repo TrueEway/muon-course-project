@@ -1,0 +1,10 @@
+\section{代码与复现说明}\label{sec:reproduce}
+公开仓库：\url{https://github.com/TrueEway/muon-course-project/tree/v1.1}。本次提交使用 \texttt{v1.1}，历史标签 \texttt{v1.0} 保持不变。新增原始记录集合摘要前 16 位为 \texttt{\RevisionDigest}；完整摘要位于 \path{output/revision_audit.json}。源码、环境、数据校验值、CSV/JSON/NPZ 和独立绘图入口均随版本保存。
+
+新增图像训练需要 Linux CUDA 环境。先按当前负载设置 \texttt{MUON\_GPU} 与 \texttt{MUON\_CPUSET}，分别指定一张 GPU 与四个逻辑核，复用已验证的 CUDA PyTorch。在项目根目录执行：
+\begin{quote}\small\ttfamily
+bash scripts/run\_h20.sh -m experiments.factorization\\
+bash scripts/run\_h20.sh train.py\\
+bash scripts/finalize\_h20.sh
+\end{quote}
+最后一条命令从完整日志绘图，按 XeLaTeX、BibTeX、XeLaTeX、XeLaTeX 的顺序编译，再校验和渲染，得到 \texttt{Muon\_Report.pdf}。完整顺序入口为 \path{scripts/reproduce_h20.sh}，Windows 的构建脚本也可重新编译已有图表。配置一致的单次实验会跳过；重跑应使用独立副本，保留冻结记录。历史 CPU 协议、依赖及命令另见仓库 README，不与新版 GPU 时间混用。

@@ -1,0 +1,200 @@
+{
+  "chosen": {
+    "sgd": 0.3,
+    "adamw": 0.001,
+    "muon": 0.005
+  },
+  "criterion": "final pilot objective after 300 steps",
+  "pilot_seed": 42,
+  "candidates": [
+    {
+      "config": {
+        "method": "sgd",
+        "seed": 42,
+        "lr": 0.03,
+        "budget": 300,
+        "pilot": true,
+        "dimension": 32,
+        "kappa": 10000.0,
+        "weight_decay": 0,
+        "ns_steps": 5,
+        "initial_scale": 0.03
+      },
+      "config_hash": "ecb42c45e043f7a63d22b71954890eb7ebc9233849d4a38eac28c4627cd56968",
+      "valid": true,
+      "initial_loss": 1.137033065755371,
+      "final_loss": 0.00014226450733260815,
+      "relative_reconstruction": 0.011290274530130867,
+      "elapsed_seconds": 0.052584026008844376,
+      "steps": 300
+    },
+    {
+      "config": {
+        "method": "sgd",
+        "seed": 42,
+        "lr": 0.1,
+        "budget": 300,
+        "pilot": true,
+        "dimension": 32,
+        "kappa": 10000.0,
+        "weight_decay": 0,
+        "ns_steps": 5,
+        "initial_scale": 0.03
+      },
+      "config_hash": "7168fb9b39027a625291d91c9420044d4547e44ce67ed05af5d62fc126351677",
+      "valid": true,
+      "initial_loss": 1.137033065755371,
+      "final_loss": 1.5986199192950023e-05,
+      "relative_reconstruction": 0.0037846770802498035,
+      "elapsed_seconds": 0.0468023344874382,
+      "steps": 300
+    },
+    {
+      "config": {
+        "method": "sgd",
+        "seed": 42,
+        "lr": 0.3,
+        "budget": 300,
+        "pilot": true,
+        "dimension": 32,
+        "kappa": 10000.0,
+        "weight_decay": 0,
+        "ns_steps": 5,
+        "initial_scale": 0.03
+      },
+      "config_hash": "9871e7ce41079b45d6824cc50132724aee205065581b0e8c844467537a0216e5",
+      "valid": true,
+      "initial_loss": 1.137033065755371,
+      "final_loss": 2.212222565781021e-06,
+      "relative_reconstruction": 0.0014078961752130835,
+      "elapsed_seconds": 0.04283938556909561,
+      "steps": 300
+    },
+    {
+      "config": {
+        "method": "adamw",
+        "seed": 42,
+        "lr": 0.001,
+        "budget": 300,
+        "pilot": true,
+        "dimension": 32,
+        "kappa": 10000.0,
+        "weight_decay": 0,
+        "ns_steps": 5,
+        "initial_scale": 0.03
+      },
+      "config_hash": "439fb20c4f9d58fd5b96f0918b1f803e7d0af6fd5560bb499d274b022c826aba",
+      "valid": true,
+      "initial_loss": 1.137033065755371,
+      "final_loss": 3.3012342124440124e-06,
+      "relative_reconstruction": 0.0017198651196844246,
+      "elapsed_seconds": 0.05101367458701134,
+      "steps": 300
+    },
+    {
+      "config": {
+        "method": "adamw",
+        "seed": 42,
+        "lr": 0.01,
+        "budget": 300,
+        "pilot": true,
+        "dimension": 32,
+        "kappa": 10000.0,
+        "weight_decay": 0,
+        "ns_steps": 5,
+        "initial_scale": 0.03
+      },
+      "config_hash": "17803e24f74da44ba1e859a1954c7c28739d613007a1ddc4bb02eb12bf4e06b2",
+      "valid": true,
+      "initial_loss": 1.137033065755371,
+      "final_loss": 6.101906993395884e-05,
+      "relative_reconstruction": 0.007394162861149735,
+      "elapsed_seconds": 0.049035411328077316,
+      "steps": 300
+    },
+    {
+      "config": {
+        "method": "adamw",
+        "seed": 42,
+        "lr": 0.05,
+        "budget": 300,
+        "pilot": true,
+        "dimension": 32,
+        "kappa": 10000.0,
+        "weight_decay": 0,
+        "ns_steps": 5,
+        "initial_scale": 0.03
+      },
+      "config_hash": "49ac4178402e0a2e462dd6bd3e66ed097f41b6a04308d03d2f590cb690f315cf",
+      "valid": true,
+      "initial_loss": 1.137033065755371,
+      "final_loss": 0.0007073102236887507,
+      "relative_reconstruction": 0.02517451937432644,
+      "elapsed_seconds": 0.04978702403604984,
+      "steps": 300
+    },
+    {
+      "config": {
+        "method": "muon",
+        "seed": 42,
+        "lr": 0.005,
+        "budget": 300,
+        "pilot": true,
+        "dimension": 32,
+        "kappa": 10000.0,
+        "weight_decay": 0,
+        "ns_steps": 5,
+        "initial_scale": 0.03
+      },
+      "config_hash": "323497b604bee326df8592242de717c78dcc6f2275a9c9f8b2bd4f244313bc87",
+      "valid": true,
+      "initial_loss": 1.137033065755371,
+      "final_loss": 0.0002888462992485111,
+      "relative_reconstruction": 0.01608753941350367,
+      "elapsed_seconds": 0.08398067019879818,
+      "steps": 300
+    },
+    {
+      "config": {
+        "method": "muon",
+        "seed": 42,
+        "lr": 0.02,
+        "budget": 300,
+        "pilot": true,
+        "dimension": 32,
+        "kappa": 10000.0,
+        "weight_decay": 0,
+        "ns_steps": 5,
+        "initial_scale": 0.03
+      },
+      "config_hash": "44ce96e2d35e900efa069074cd063d2389fa708cc264c6ec207570e0419027ea",
+      "valid": true,
+      "initial_loss": 1.137033065755371,
+      "final_loss": 0.0016587519257689866,
+      "relative_reconstruction": 0.03855200238153026,
+      "elapsed_seconds": 0.08396142348647118,
+      "steps": 300
+    },
+    {
+      "config": {
+        "method": "muon",
+        "seed": 42,
+        "lr": 0.05,
+        "budget": 300,
+        "pilot": true,
+        "dimension": 32,
+        "kappa": 10000.0,
+        "weight_decay": 0,
+        "ns_steps": 5,
+        "initial_scale": 0.03
+      },
+      "config_hash": "f622e21986d7ca9ecbaab7967171d4428041f918c7fca12a2a8dd457501ed0f8",
+      "valid": true,
+      "initial_loss": 1.137033065755371,
+      "final_loss": 0.012177634603106828,
+      "relative_reconstruction": 0.10445703382904321,
+      "elapsed_seconds": 0.08321397751569748,
+      "steps": 300
+    }
+  ]
+}

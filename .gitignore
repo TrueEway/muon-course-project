@@ -1,8 +1,13 @@
 .venv/
+.cache/
 __pycache__/
 *.py[cod]
 tmp/
 data/input.txt
+data/cifar10/*.tar.gz
+data/cifar10/*.part
+output/revision/checkpoints/
+output/revision/spectra_temporary/
 output/results/checkpoints/
 output/pdf/*.aux
 output/pdf/*.bbl
@@ -17,3 +22,4 @@ output/pdf/*.toc
 output/pdf/*.xdv
 output/pdf/*.synctex.gz
 dist/
+local_runs/

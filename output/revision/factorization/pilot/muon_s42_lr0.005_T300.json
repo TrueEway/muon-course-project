@@ -1,0 +1,21 @@
+{
+  "config": {
+    "method": "muon",
+    "seed": 42,
+    "lr": 0.005,
+    "budget": 300,
+    "pilot": true,
+    "dimension": 32,
+    "kappa": 10000.0,
+    "weight_decay": 0,
+    "ns_steps": 5,
+    "initial_scale": 0.03
+  },
+  "config_hash": "323497b604bee326df8592242de717c78dcc6f2275a9c9f8b2bd4f244313bc87",
+  "valid": true,
+  "initial_loss": 1.137033065755371,
+  "final_loss": 0.0002888462992485111,
+  "relative_reconstruction": 0.01608753941350367,
+  "elapsed_seconds": 0.08398067019879818,
+  "steps": 300
+}

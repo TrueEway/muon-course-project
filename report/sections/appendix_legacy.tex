@@ -1,0 +1,64 @@
+\section{边界情形与证明核查}
+新增检查包括完整 ResNet-18 的参数量与八个残差块、卷积参数组的无重复覆盖、$K=0$ 的准确含义和零梯度行为、谱范数误差下降不等式的数值核查、两因子目标的联合有限差分梯度，以及数据增强的种子复现。它们补充下文原有版本的检查项目。
+\subsection{新增实验的数值汇总}
+\begin{table}[htbp]\centering\small
+\caption{新增病态矩阵分解的末点指标，三个种子的均值与样本标准差。}
+\input{../output/tables/factorization_summary.tex}
+\end{table}
+\begin{table}[htbp]\centering\small
+\caption{ResNet-18 的 $K$ 消融数值。学习率固定为 $K=5$ 试跑选定值，其余训练设置完全相同。}
+\input{../output/tables/k_ablation.tex}
+\end{table}
+\subsection{一个不应使用的矩阵范数不等式}
+对可逆对角矩阵 $S=\operatorname{diag}(1,2)$，
+\begin{equation}
+ \op{S^{-1}}=1,\qquad \frac1{\op S}=\frac12.
+\end{equation}
+因此一般不能使用 $\|S^{-1}\|_{\mathrm{op}}\leq1/\|S\|_{\mathrm{op}}$。正确关系是 $\|S^{-1}\|_{\mathrm{op}}=1/s_{\min}(S)$。本文用式\eqref{eq:alignment}替代含逆矩阵的论证，同时避免要求梯度或动量始终满秩。指出这一中间步骤的问题，不等于断言所有相关定理都无法通过其他方法证明。
+
+\subsection{数值秩与浮点误差}
+精确数学定义只保留正奇异值。程序采用阈值
+\begin{equation}
+ s_i>\max(m,n)\,\epsilon_{\mathrm{mach}}\,s_1,
+\end{equation}
+以避免浮点 SVD 把数值零误认为有效方向。因此实现严格说是数值秩上的极因子。合成实验使用 float64；语言模型的 SVD 对照使用 float32。阈值附近的方向可能与实数模型不同，这是实现限制，不能通过把容差设置为零来消除。
+
+\subsection{检查项目与实验解释}
+单元检查包括：零秩、秩一与满秩矩阵上的对偶恒等式和范数界；二次目标的有限差分梯度；带任意跟踪误差的单步下降；有限多项式与标量奇异值迭代的一致性；更新时不原地改写梯度；参数分组无重复且覆盖全部参数；因果注意力不使用未来字符；同一种子训练一步的精确复现。
+
+有限步定理控制的是理论期望，随机实验只提供有限样本观察。随机实验的 CSV 内包含真实梯度，是因为合成目标允许计算该量；这并不意味着实际大模型训练时已知全数据梯度。语言模型没有验证全局光滑性或全程方差界，故其曲线只能作为应用实验报告。
+
+\section{运行配置与文件对应}
+\begin{table}[htbp]\centering\small
+\caption{主要运行记录及其用途}
+\begin{tabularx}{\linewidth}{lX}\toprule
+记录目录或文件 & 内容 \\\midrule
+\texttt{output/results/deterministic} & 每个种子、条件数、预算与方法的逐步 CSV 及配置 JSON \\
+\texttt{output/results/stochastic} & 噪声、批量、预算、真实梯度与动量误差 \\
+\texttt{output/results/orthogonalization} & 各形状、输入谱、步数的误差与重复计时 \\
+\texttt{output/results/language/pilot} & 全部候选学习率的试跑记录 \\
+\texttt{output/results/language/formal} & 正式训练及测试指标，检查点步数和参数分组 \\
+\texttt{data/manifest.json} & 固定数据链接、提交版本、SHA256、词表与划分大小 \\
+\texttt{output/audit.json} & 运行计数、数值核查和结果记录集合校验值 \\
+\bottomrule\end{tabularx}
+\end{table}
+正式检查点保存在本地输出目录，不纳入 GitHub 原始记录集合；复现脚本可以重新训练得到。计时相关字段会随机器负载变化，因而重新运行后的结果集合 SHA256 也会变化。校验值用于标识本次提交的记录集合，不要求不同机器重跑后具有相同的时间戳、耗时或集合摘要。
+
+历史结果集合摘要为 \texttt{\ResultDigest}。附录语言模型使用的 Tiny Shakespeare 文件 SHA256 为
+\begin{center}\footnotesize\ttfamily\expandafter\nolinkurl\expandafter{\DataSHA}\end{center}
+
+\subsection{理论与实现的对照表}
+\begin{table}[htbp]
+\centering\small
+\caption{理论版本与语言模型实现的对应关系}
+\begin{tabularx}{\linewidth}{lXX}
+\toprule 项目 & 理论与矩阵实验 & 语言模型实验 \\\midrule
+正交化 & 精确紧致极因子 & 精确极因子或五步多项式 \\
+动量初始化 & $M_1=G_1$ & 缓冲区初始化为零 \\
+Nesterov / 形状缩放 & 均不使用 & 两种 Muon 配置均使用 \\
+权重衰减 & 0 & 权重矩阵 0.01 \\
+其他参数 & 单个矩阵 & AdamW 辅助参数组 \\
+步长与动量 & 按定理设置 & 验证集选步长，$\beta=0.95$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
